@@ -4,6 +4,29 @@ import numpy as np
 import cv2
 from PIL import Image
 import os
+import gdown
+import os
+
+# File ID dari Google Drive (GANTI DENGAN ID ANDA!)
+GOOGLE_DRIVE_FILE_ID = "19s8gFDeTtKM2VZWFO8Gz5y9W6Tw-NULM"  # ← GANTI INI!
+
+# URL untuk download
+MODEL_URL = f"https://drive.google.com/uc?id={GOOGLE_DRIVE_FILE_ID}"
+MODEL_PATH = "models/resnet50_breast_cancer.h5"
+
+# Download model jika belum ada
+if not os.path.exists(MODEL_PATH):
+    os.makedirs("models", exist_ok=True)
+    print("📥 Downloading AI model from Google Drive...")
+    try:
+        gdown.download(MODEL_URL, MODEL_PATH, quiet=False)
+        print(f"✅ Model downloaded: {MODEL_PATH}")
+    except Exception as e:
+        print(f"⚠️ Download failed: {e}")
+        print("⚠️ Running in demo mode with random predictions")
+else:
+    print(f"✅ Model already exists: {MODEL_PATH}")
+# ================================================
 
 # Page config
 st.set_page_config(
